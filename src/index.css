@@ -1,0 +1,15 @@
+/* src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif; /* Police moderne et professionnelle */
+  background-color: #f5f5f5; /* Fond clair et doux */
+  color: #333; /* Texte sombre pour un bon contraste */
+}
+
+/* Supprime les marges par défaut des éléments */
+* {
+  box-sizing: border-box;
+}
