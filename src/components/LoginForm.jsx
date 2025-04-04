@@ -26,12 +26,25 @@ function LoginForm({ onLogin }) {
     e.preventDefault();
     setLoading(true);
     setError('');
-
+  
     try {
       const response = await loginUser(formData.email, formData.password, formData.role);
-      onLogin(response.token, formData.role === 'patient' ? response.patient.id : response.assistant.id);
+      let userId;
+      if (formData.role === 'patient') {
+        userId = response.patient?.id;
+      } else if (formData.role === 'assistant') {
+        userId = response.assistant?.id;
+      } else if (formData.role === 'doctor') {
+        userId = response.doctor?.id;
+      }
+  
+      if (!userId) {
+        throw new Error('ID utilisateur non trouvé dans la réponse');
+      }
+  
+      onLogin(response.token, userId, formData.role);
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Erreur lors de la connexion');
     } finally {
       setLoading(false);
     }
@@ -67,6 +80,7 @@ function LoginForm({ onLogin }) {
           <Select name="role" value={formData.role} onChange={handleChange}>
             <MenuItem value="patient">Patient</MenuItem>
             <MenuItem value="assistant">Assistant</MenuItem>
+            <MenuItem value="doctor">Médecin</MenuItem>
           </Select>
         </FormControl>
         {error && (

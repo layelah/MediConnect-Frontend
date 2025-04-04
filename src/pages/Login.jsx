@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 function Login() {
   const navigate = useNavigate();
 
-  const handleLogin = (token, userId) => {
+  const handleLogin = (token, userId, role) => {
     localStorage.setItem('token', token);
     localStorage.setItem('userId', userId);
+    localStorage.setItem('role', role);
     navigate('/medical-record');
   };
 
